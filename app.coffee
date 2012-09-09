@@ -2,10 +2,12 @@ express = require 'express'
   , neo4j = require 'neo4j'
   , routes = require './routes'
   , user = require './routes/user'
+  , relationship = require './routes/relationship'
   , http = require 'http'
   , path = require 'path'
 
 app = express()
+db = new neo4j.GraphDatabase 'http://localhost:7474'
 
 app.configure ->
   app.set 'port', process.env.PORT || 3618
@@ -24,15 +26,8 @@ app.configure 'development', ->
 
 app.get '/', routes.index
 app.get '/users', user.list
-app.post '/relationship/new', -> 
-  body = req.body
-  info = db.createNode  { "Object" : body.Object }
-  info.save (error) ->
-    if error
-      console.log 'Error ' + error + ' occured.'
-      return
-    console.log 'Node ' + body.Object + ' saved.'
+app.post '/relationship/new', (req, res) -> 
+  relationship.new(req, res, db)
 
 app.listen app.get('port'), ->
-  db = new neo4j.GraphDatabase 'http://localhost:7474'
-  console.log "node-mem-graph server listening on port " + app.get 'port'
+  console.log "node-mem-graph server listening on port #{app.get 'port'} ."
