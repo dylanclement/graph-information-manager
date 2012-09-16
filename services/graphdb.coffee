@@ -22,5 +22,8 @@ module.exports = class GraphDB
   countRecords: (callback) ->
     @db.countRecords callback
 
+  getAll: (callback) ->
+    @db.command 'select from OGraphVertex', callback
+    
   close: ->
     @db.close()

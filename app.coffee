@@ -2,7 +2,7 @@ express = require 'express'
   , GraphDb = require "./services/graphdb"
   , Relationship = require "./models/relationship"  
   , routes = require './routes'
-  , user = require './routes/user'
+  , test = require './routes/test'
   , relationship = require './routes/relationship'
   , http = require 'http'
   , path = require 'path'
@@ -21,7 +21,7 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use app.router
-  app.use require('less-middleware', src: __dirname + '/public' )
+  app.use require('less-middleware')(src: "#{__dirname}/public" )
   app.use express.static(path.join __dirname, 'public')
 
 app.configure 'development', ->
@@ -31,6 +31,8 @@ app.listen app.get('port'), ->
   console.log "node-mem-graph server listening on port #{app.get 'port'} ."
   db.open ->
     app.get '/', routes.index
-    app.get '/users', user.list
+    app.get '/test', test.list
+    app.get '/relationship/list', (req, res) -> 
+      relationship.list(req, res, rel)
     app.post '/relationship/new', (req, res) -> 
       relationship.new(req, res, rel)
