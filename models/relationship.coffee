@@ -10,7 +10,7 @@ module.exports = class Relationship
         return
       @db.createVertex name : sub, (err, subNode) =>
         if err
-          console.log "Error occured:#{err}"
+          console.log "Error occured: #{err}"
           return
         @db.createEdge objNode, subNode, { name : rel, strength: strength, createdAt : Date }, (err, edge) =>
           if err
@@ -26,3 +26,6 @@ module.exports = class Relationship
   # eg. a dog has a nose
   has_a: (obj, sub, strength = 1.0, callback) ->
     @relation obj, "has_a", strength, sub, callback
+
+  all: (callback) ->
+    @db.getAll callback

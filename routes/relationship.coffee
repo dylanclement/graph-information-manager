@@ -8,3 +8,7 @@ exports.new = (req, res, relationship) ->
       console.log "Error occured: #{err}"
       return
     res.send 'saved object #{node}'
+
+exports.list = (req, res, relationship) ->
+  relationship.all (err, results) ->
+    res.render 'relations', { title: "Relationships", list: results }
