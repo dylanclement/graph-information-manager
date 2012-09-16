@@ -1,27 +1,10 @@
 # Add node
-exports.new = (req, res, db) ->
+exports.new = (req, res, relationship) ->
   body = req.body
-  ###info = db.createNode  { "Object" : body.Object }
-  info.save (error) ->
-    if error
-      console.log 'Error ' + error + ' occured.'
+  console.log body.Obj
+  relationship.relation body.Obj, body.Rel, 1.0, body.Sub, (err, node) ->
+    if err
+      res.send "Error occured: #{err}"
+      console.log "Error occured: #{err}"
       return
-    console.log 'Node ' + body.Object + ' saved.'  ###
-  obj = 
-    name: body.Obj
-    id : 0
-    type: "Object"
-
-  subj = 
-    name: body.Sub
-    id : 1
-    type: "Subject"
-
-  db.createVertex obj, (err, rootNode) ->
-    assert !err, err
-    db.createVertex subj, (err, childNode) ->
-      assert !err, err
-      db.createEdge rootNode, childNode, (err, edge) ->
-        assert !err, err
-        console.log "Relationship between #{body.Object} to #{body.Subject} saved."
-  res.send  'saved object'
+    res.send 'saved object #{node}'

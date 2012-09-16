@@ -4,7 +4,7 @@ db = new GraphDb
 rel = new Relationship db
 
 db.open ->
-  rel.is_a "dog", "animal", 1.0, (node, err) ->    
+  rel.is_a "dog", "animal", 1.0, (err, node) ->    
     if err
       console.log "Error occured:#{err}"
       return
