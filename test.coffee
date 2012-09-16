@@ -1,48 +1,15 @@
-orientdb = require 'orientdb'
-dbConfig = require "./config/dbConfig"
-serverConfig = require "./config/serverConfig"
+GraphDb = require "./services/graphdb"
+Relationship = require "./models/relationship"
+db = new GraphDb
+rel = new Relationship db
 
-server = new orientdb.Server serverConfig
-db = new orientdb.GraphDb "temp", server, dbConfig
-
-class Relationship
-  constructor: (@db) ->
-
-  save: (object, relationship, subject, callback) ->
-    # Create the object, subject and relationship objects
-    obj =
-      name: object
-    rel =
-      name: relationship
-      createdAt: Date
-    sub = 
-      name: subject
-
-    # save the object, subject and relationship to the db
-    # TODO! check if the obj and sub exist before trying to save
-    db.createVertex obj, (err, objNode) ->
-      if err
-        console.log "Error occured:#{err}"
-        return
-      db.createVertex sub, (err, subNode) ->
-        if err
-          console.log "Error occured:#{err}"
-          return
-        db.createEdge objNode, subNode, (err, edge) ->
-          if err
-            console.log "Error occured:#{err}"
-            return
-          console.log "Saved #{objNode}->#{relationship}->#{sub}"
-          callback err
-
-db.open (err, result) ->
-  if err
-    console.log "Error occured:#{err}"
-    return
-
-  rel = new Relationship db
-  rel.save "dog", "eat", "dog biscuits", (err) ->    
+db.open ->
+  rel.is_a "dog", "animal", 1.0, (node, err) ->    
     if err
       console.log "Error occured:#{err}"
       return
+    db.getOutEdges node, (err, outEdges) ->
+      console.log "out Edges = #{outEdges}."
+    db.countRecords (err, count) ->
+      console.log "Number of records = #{count}."
     db.close()
