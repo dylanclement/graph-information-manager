@@ -1,32 +1,9 @@
 orientdb = require 'orientdb'
-
-dbConfig =
-  user_name: "admin"
-  user_password: "admin"
-
-serverConfig =
-    host: "localhost"
-    port: 2424
-    user_name: "admin"
-    user_password: "admin"
+dbConfig = require "./config/dbConfig"
+serverConfig = require "./config/serverConfig"
 
 server = new orientdb.Server serverConfig
 db = new orientdb.GraphDb "temp", server, dbConfig
-
-body =
-  obj : "Object"
-  rel : "Relationship"
-  sub : "Subject"
-
-obj =
-  name: body.obj
-  id : 0
-  type: "Object"
-
-sub =
-  name: body.sub
-  id : 1
-  type: "Subject"
 
 class Relationship
   constructor: (@db) ->
@@ -68,3 +45,4 @@ db.open (err, result) ->
     if err
       console.log "Error occured:#{err}"
       return
+    db.close()
