@@ -1,5 +1,5 @@
 express = require 'express'
-  , neo4j = require 'neo4j'
+  , orientdb = require 'orientdb'
   , routes = require './routes'
   , user = require './routes/user'
   , relationship = require './routes/relationship'
@@ -7,7 +7,23 @@ express = require 'express'
   , path = require 'path'
 
 app = express()
-db = new neo4j.GraphDatabase 'http://localhost:7474'
+
+dbConfig =
+  user_name: "admin"
+  user_password: "admin"
+
+serverConfig =
+    host: "localhost"
+    port: 2424
+    user_name: "admin"
+    user_password: "admin"
+
+GraphDb = orientdb.GraphDb
+Server = orientdb.Server
+
+server = new Server serverConfig
+db = new GraphDb "temp", server, dbConfig
+#db = new orientdb.GraphDatabase 'http://localhost:7474'
 
 app.configure ->
   app.set 'port', process.env.PORT || 3618
