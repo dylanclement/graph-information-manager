@@ -7,15 +7,15 @@ module.exports = class Relationship
     @db.createVertex name : obj, (err, objNode) =>
       if err
         console.log "Error occured:#{err}"
-        return
+        return callback err
       @db.createVertex name : sub, (err, subNode) =>
         if err
           console.log "Error occured: #{err}"
-          return
+          return callback err
         @db.createEdge objNode, subNode, { name : rel, strength: strength, createdAt : Date }, (err, edge) =>
           if err
             console.log "Error occured:#{err}"
-            return
+            return callback err
           console.log "Saved #{objNode.name}(#{objNode["@rid"]})->#{edge.name}(#{edge["@rid"]})->#{subNode.name}(#{subNode["@rid"]})"
           callback err, objNode
 
@@ -28,4 +28,4 @@ module.exports = class Relationship
     @relation obj, "has_a", strength, sub, callback
 
   all: (callback) ->
-    @db.getAll callback
+    @db.getAllVertexes callback
