@@ -9,20 +9,50 @@ module.exports = class GraphDB
   
   open: (callback) -> 
     @db.open callback
+    
+  #command: (cmd, callback) ->
+  #  @db.command cmd, callback
+
+  getVertex: (name, callback) ->
+    @db.command "select from OGraphVertex where name = '#{name}'", (err, results) ->
+      if err
+        console.log "Err:#{err}"
+        return callback err
+      callback err, results
 
   createVertex: (obj, callback) ->
-    @db.createVertex obj, callback
+    @getVertex obj.name, (err, results) =>
+      if results and results[0]
+        console.log "Vertex exists: #{results[0]}"
+        return callback null, results[0]
+      @db.createVertex obj, callback
+      console.log "Created vertex: #{obj.name}"
+
+  getEdge: (name, callback) ->
+    @db.command "select from OGraphEdge where name = '#{name}'", (err, results) ->
+      if err
+        console.log "Err:#{err}"
+        return callback err
+      callback err, results
 
   createEdge: (obj, sub, relationship, callback) ->
-    @db.createEdge obj, sub, relationship, callback
+    @getEdge relationship.name, (err, results) =>
+      if results and results[0]
+        console.log "Edge exists: #{results[0]}"
+        return callback null, results[0]
+      @db.createEdge obj, sub, relationship, callback
+      console.log "Created edge: #{relationship.name}"
 
   getOutEdges: (node, callback) ->
     @db.getOutEdges node, callback
 
+  getInEdges: (node, callback) ->
+    @db.getInEdges node, callback
+
   countRecords: (callback) ->
     @db.countRecords callback
 
-  getAll: (callback) ->
+  getAllVertexes: (callback) ->
     @db.command 'select from OGraphVertex', callback
     
   close: ->
