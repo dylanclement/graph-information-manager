@@ -1,6 +1,7 @@
-==what is this==
+#what is this#
 node and graphdb app to map data and facts.
 
+#but how#
 data is entered using object->relation->subject. 
 
 this relationship is saved in the database, along with meta-data. 
