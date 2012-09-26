@@ -6,6 +6,7 @@ express = require 'express'
   , relationship = require './routes/relationship'
   , http = require 'http'
   , path = require 'path'
+  , redis = require 'redis'
 
 db = new GraphDb
 rel = new Relationship db
@@ -28,8 +29,14 @@ app.configure 'development', ->
   app.use express.errorHandler()
 
 app.listen app.get('port'), ->
-  console.log "node-mem-graph server listening on port #{app.get 'port'} ."
+  console.log "node-mem-graph server listening on port #{app.get 'port'}."
   db.open ->
+    console.log "connected to graph db."
+    client = redis.createClient 3630
+    console.log "connected to redis db."
+    client.on "error", (err) ->
+        console.log "Error " + err
+
     app.get '/', routes.index
     app.get '/test', test.list
     app.get '/relationship/list', (req, res) -> 
