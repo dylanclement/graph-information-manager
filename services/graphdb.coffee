@@ -1,6 +1,6 @@
 orientdb = require 'orientdb'
-dbConfig = require "../config/dbConfig"
-serverConfig = require "../config/serverConfig"
+, dbConfig = require "../config/graphdbConfig"
+, serverConfig = require "../config/graphdbServerConfig"
 
 module.exports = class GraphDB
   constructor: ->
