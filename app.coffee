@@ -1,5 +1,6 @@
 express = require 'express'
   , GraphDb = require "./services/graphdb"
+  , DataDb = require "./services/datadb"
   , Relationship = require "./models/relationship"  
   , routes = require './routes'
   , test = require './routes/test'
@@ -8,8 +9,9 @@ express = require 'express'
   , path = require 'path'
   , redis = require 'redis'
 
-db = new GraphDb
-rel = new Relationship db
+graphdb = new GraphDb
+datadb = new DataDb
+rel = new Relationship graphdb, datadb
 
 app = express()
 
@@ -30,16 +32,11 @@ app.configure 'development', ->
 
 app.listen app.get('port'), ->
   console.log "node-mem-graph server listening on port #{app.get 'port'}."
-  db.open ->
+  graphdb.open ->
     console.log "connected to graph db."
-    client = redis.createClient 3630
-    console.log "connected to redis db."
-    client.on "error", (err) ->
-        console.log "Error " + err
-
-    app.get '/', routes.index
-    app.get '/test', test.list
-    app.get '/relationship/list', (req, res) -> 
-      relationship.list(req, res, rel)
-    app.post '/relationship/new', (req, res) -> 
-      relationship.new(req, res, rel)
+    datadb.open ->
+      console.log "connected to redis db."
+      app.get '/', routes.index
+      app.get '/test', test.list
+      app.get '/relationship/list', (req, res) ->
+            app.post '/relationship/new', (req, res) -> 
