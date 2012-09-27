@@ -31,12 +31,18 @@ app.configure 'development', ->
   app.use express.errorHandler()
 
 app.listen app.get('port'), ->
-  console.log "node-mem-graph server listening on port #{app.get 'port'}."
-  graphdb.open ->
+  console.log "server listening on http://localhost:#{app.get 'port'}."
+  graphdb.open (err) ->
+    if err
+      return
     console.log "connected to graph db."
-    datadb.open ->
+    datadb.open (err) ->
+      if err
+        return
       console.log "connected to redis db."
       app.get '/', routes.index
       app.get '/test', test.list
       app.get '/relationship/list', (req, res) ->
-            app.post '/relationship/new', (req, res) -> 
+        relationship.list(req, res, rel)
+      app.post '/relationship/new', (req, res) ->
+        relationship.new(req, res, rel)
