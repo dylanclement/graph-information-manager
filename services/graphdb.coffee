@@ -1,6 +1,6 @@
 orientdb = require 'orientdb'
-dbConfig = require "../config/dbConfig"
-serverConfig = require "../config/serverConfig"
+, dbConfig = require "../config/graphdbConfig"
+, serverConfig = require "../config/graphdbServerConfig"
 
 module.exports = class GraphDB
   constructor: ->
@@ -8,7 +8,11 @@ module.exports = class GraphDB
     @db = new orientdb.GraphDb "temp", @server, dbConfig
   
   open: (callback) -> 
-    @db.open callback
+    @db.open (err) ->
+      if err
+        console.log "Error opening database: #{err}"
+      return callback err
+
     
   #command: (cmd, callback) ->
   #  @db.command cmd, callback
