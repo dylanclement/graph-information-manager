@@ -16,9 +16,9 @@ module.exports = class Relationship
           if err
             console.log "Error occured:#{err}"
             return callback err
-          console.log "Saved #{objNode.name}(#{objNode["@rid"]})->#{edge.name}(#{edge["@rid"]})->#{subNode.name}(#{subNode["@rid"]})"
-
-          callback err, objNode
+          @datadb.getData "#{obj}:#{rel}:#{sub}", (err, data) =>
+            console.log "Saved #{objNode.name}(#{objNode["@rid"]})->#{edge.name}(#{edge["@rid"]})->#{subNode.name}(#{subNode["@rid"]}). Access count = #{data.access_count}"
+            callback err, objNode
 
   # eg. a dog is a animal
   is_a: (obj, sub, strength = 1.0, callback) ->
