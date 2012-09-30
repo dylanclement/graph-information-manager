@@ -13,3 +13,9 @@ exports.list = (req, res, relationship) ->
   relationship.all (err, results) ->
     res.render 'relations', { title: "Relationships", list: results }
     console.log "Relationships"
+
+
+exports.all = (req, res, relationship) ->
+  relationship.allG (err, results) ->
+    res.render 'relations', { title: "Relationships", list: results }
+    console.log "Relationships"

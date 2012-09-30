@@ -46,3 +46,5 @@ app.listen app.get('port'), ->
         relationship.list(req, res, rel)
       app.post '/relationship/new', (req, res) ->
         relationship.new(req, res, rel)
+      app.get '/relationship/all', (req, res) ->
+        relationship.all(req, res, rel)

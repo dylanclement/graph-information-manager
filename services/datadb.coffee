@@ -12,7 +12,8 @@
     close: ->
       @client.quit()
 
-    getData: (key, callback) ->
+    getData: (obj, rel, sub, cond, callback) ->
+      key = "#{obj}:#{rel}:#{sub}:#{cond}"
       @client.hgetall key, (err, data) =>
         if err
           console.log "Error: Fetching meta-data.", key, err
