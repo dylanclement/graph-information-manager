@@ -59,5 +59,8 @@ module.exports = class GraphDB
   getAllVertexes: (callback) ->
     @db.command 'select from OGraphVertex', callback
     
+  getAllGremlinVertexes: (callback) ->
+    @db.command 'select from GREMLIN("V.out")', callback
+
   close: ->
     @db.close()
