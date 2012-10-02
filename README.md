@@ -6,7 +6,7 @@ data is entered using object->relation->subject.
 
 this relationship is saved in the database, along with meta-data. 
 
-the relationships and metadata together can be analysed for patters, for example if multiple objects has an 'is_a' relation to a subject then it is probably a category. 
+the relationships and metadata together can be analysed for patterns, for example if multiple objects has an 'is_a' relation to a subject then it is probably a category. 
 
 accessing the data are saved in the meta data, it is therefore constantly changing.
 

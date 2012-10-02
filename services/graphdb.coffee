@@ -14,11 +14,11 @@ module.exports = class GraphDB
       return callback err
 
     
-  #command: (cmd, callback) ->
-  #  @db.command cmd, callback
+  command: (cmd, callback) ->
+    @db.command cmd, callback
 
   getVertex: (name, callback) ->
-    @db.command "select from OGraphVertex where name = '#{name}'", (err, results) ->
+    @command "select from OGraphVertex where name = '#{name}'", (err, results) ->
       if err
         console.log "Err:#{err}"
         return callback err
@@ -33,7 +33,7 @@ module.exports = class GraphDB
       console.log "Created vertex: #{obj.name}"
 
   getEdge: (name, callback) ->
-    @db.command "select from OGraphEdge where name = '#{name}'", (err, results) ->
+    @command "select from OGraphEdge where name = '#{name}'", (err, results) ->
       if err
         console.log "Err:#{err}"
         return callback err
@@ -57,10 +57,10 @@ module.exports = class GraphDB
     @db.countRecords callback
 
   getAllVertexes: (callback) ->
-    @db.command 'select from OGraphVertex', callback
+    @command 'select from OGraphVertex', callback
     
   getAllGremlinVertexes: (callback) ->
-    @db.command 'select from GREMLIN("V.out")', callback
+    @command 'select from GREMLIN("V.out")', callback
 
   close: ->
     @db.close()
