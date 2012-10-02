@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  a.btn.btn-success(href='/relationship/list') List objects
+  a.btn.btn-success (href='/relationship/list') List objects
   p Add a new relationship
   form(name="input", action="/relationship/new", method="post")
     input(type="text", name="Obj") Obbject
