@@ -10,6 +10,11 @@
     "jade": "*",
     "redis": "*",
     "less-middleware": "*",
+    "migrate": "*",
     "orientdb" : "*"
+  },
+  "scripts": {
+    "test": "mocha",
+    "migrate": "node_modules/.bin/migrate"
   }
 }

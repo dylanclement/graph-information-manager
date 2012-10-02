@@ -1,9 +1,8 @@
 node_templates
 node_modules
-.DS_Store
+.*
 *.swp
 *.swo
 *.log
 *~
 ~*
-
