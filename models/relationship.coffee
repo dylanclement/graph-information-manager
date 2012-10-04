@@ -30,5 +30,5 @@ module.exports = class Relationship
   all: (callback) ->
     @graphdb.getAllVertexes callback
 
-  all: (callback) -> 
+  allGremlin: (callback) -> 
     @graphdb.getAllGremlinVertexes callback    
