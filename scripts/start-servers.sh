@@ -1,3 +1,3 @@
 #!/bin/bash
-. ~/Programs/redis-stable/src/redis-server
+. /etc/init.d/redis_3630 start
 . ~/Programs/orientdb/bin/server.sh
