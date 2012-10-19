@@ -2,11 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  a.btn.btn-success(href='/relationship/list') List objects
-  p Add a new relationship
-  form(name="input", action="/relationship/new", method="post")
-    input(type="text", name="Obj") Obbject
-    input(type="text", name="Rel") Relationship
-    input(type="text", name="Sub") Subject
-    input(type="submit", value="submit")
+  p.lead Welcome to #{title}, here we use relations between objects to draw conclusions, analyse patterns and run custom logic on the saved memory. The goal is to have the memory as a organic graph, growing and retracting.
+  form.form-inline(name="input", action="/relationship/new", method="post")
+    input(type="text", name="Obj", placeholder="Object Name…")
+    input(type="text", name="Rel", placeholder="Relationship…")
+    input(type="text", name="Sub", placeholder="Subject…")
+    input.btn.success(type="submit", value="submit")
