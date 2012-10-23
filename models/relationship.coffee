@@ -4,15 +4,15 @@ module.exports = class Relationship
   # save the object, subject and relationship to the db
   relation: (obj, rel, strength, sub, callback) ->
     # TODO! check if the obj and sub exist before trying to save
-    @graphdb.createVertex name : obj, (err, objNode) =>
+    @graphdb.createObject name : obj, (err, objNode) =>
       if err
         console.log "Error occured:#{err}"
         return callback err
-      @graphdb.createVertex name : sub, (err, subNode) =>
+      @graphdb.createObject name : sub, (err, subNode) =>
         if err
           console.log "Error occured: #{err}"
           return callback err
-        @graphdb.createEdge objNode, subNode, { name : rel, strength: strength, createdAt : Date.now(), access_count : 0 }, (err, edge) =>
+        @graphdb.createRelation objNode, subNode, { name : rel, strength: strength, createdAt : Date.now(), access_count : 0 }, (err, edge) =>
           if err
             console.log "Error occured:#{err}"
             return callback err
@@ -28,7 +28,7 @@ module.exports = class Relationship
     @relation obj, "has_a", strength, sub, callback
 
   all: (callback) ->
-    @graphdb.getAllVertexes callback
+    @graphdb.getAllObjects callback
 
   allGremlin: (callback) -> 
-    @graphdb.getAllGremlinVertexes callback    
+    @graphdb.getAllObjects_Gremlin callback    
