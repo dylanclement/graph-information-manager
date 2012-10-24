@@ -16,6 +16,6 @@ exports.list = (req, res, relationship) ->
 
 
 exports.all = (req, res, relationship) ->
-  relationship.allG (err, results) ->
+  relationship.allGremlin (err, results) ->
     res.render 'relations', { title: "Relationships", list: results }
     console.log "Relationships"

@@ -64,3 +64,6 @@ module.exports = class GraphDB
 
   close: ->
     @db.close()
+
+  getEntity: (name, callback) ->
+    @getVertex name, callback
