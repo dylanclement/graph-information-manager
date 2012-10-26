@@ -1,6 +1,6 @@
 orientdb = require 'orientdb'
-, dbConfig = require "../config/graphdbConfig"
-, serverConfig = require "../config/graphdbServerConfig"
+, dbConfig = require "../../config/graphdbConfig"
+, serverConfig = require "../../config/graphdbServerConfig"
 
 module.exports = class GraphDB
   constructor: ->
@@ -13,7 +13,9 @@ module.exports = class GraphDB
         console.log "Error opening database: #{err}"
       return callback err
 
-    
+  close: ->
+    @db.close()
+
   command: (cmd, callback) ->
     @db.command cmd, callback
 
@@ -61,9 +63,6 @@ module.exports = class GraphDB
     
   getAllObjects_Gremlin: (callback) ->
     @command 'select from GREMLIN("V.out")', callback
-
-  close: ->
-    @db.close()
 
   getEntity: (name, callback) ->
     @getVertex name, callback
