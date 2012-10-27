@@ -13,7 +13,8 @@
     "orientdb" : "*"
   },
   "devDependencies": {
-    "mocha": "0.3.x"
+    "mocha": "*",
+    "chai": "*"
   },
   "scripts": {
     "start": "node app",    
