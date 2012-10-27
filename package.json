@@ -1,20 +1,23 @@
 {
-  "name": "application-name",
+  "name": "graph-information-manager",
   "version": "0.0.1",
+  "description": "Manage information using a graph database.",
+  "author": "Dylan Clement",
   "private": true,
-  "scripts": {
-    "start": "node app"
-  },
   "dependencies": {
-    "express": "3.0.0rc4",
+    "express": "3.0.0",
     "jade": "*",
     "redis": "*",
     "less-middleware": "*",
     "migrate": "*",
     "orientdb" : "*"
   },
+  "devDependencies": {
+    "mocha": "0.3.x"
+  },
   "scripts": {
-    "test": "mocha",
-    "migrate": "node_modules/.bin/migrate"
+    "start": "node app",    
+    "test": "make test",
+    "migrate": "make migrate"
   }
 }
