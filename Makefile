@@ -9,7 +9,7 @@ stop-servers:
 	. /etc/init.d/redis_3630 stop
 
 test:
-	@./node_modules/.bin/mocha src
+	@./node_modules/.bin/mocha --compilers coffee:coffee-script src/test
 
 migrate:
 	@./node_modules/.bin/migrate
