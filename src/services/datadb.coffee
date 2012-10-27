@@ -1,5 +1,5 @@
   redis = require 'redis'
-  , dbConfig = require "../config/datadbConfig"
+  , dbConfig = require "../../config/datadbConfig"
 
   module.exports = class DataDB
     constructor: ->
