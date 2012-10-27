@@ -34,15 +34,15 @@ module.exports = class GraphDB
       @db.createVertex obj, callback
       console.log "Created vertex: #{obj.name}"
 
-  getRelation: (name, callback) ->
-    @command "select from OGraphEdge where name = '#{name}'", (err, results) ->
+  getRelation: (name, out_id, in_id, callback) ->
+    @command "select from OGraphEdge where name = '#{name}' and out = '#{out_id}' and in = '#{in_id}'", (err, results) ->
       if err
         console.log "Err:#{err}"
         return callback err
       callback err, results
 
   createRelation: (obj, sub, relationship, callback) ->
-    @getRelation relationship.name, (err, results) =>
+    @getRelation relationship.name, obj["@rid"], sub["@rid"], (err, results) =>
       if results and results[0]
         console.log "Edge exists: #{results[0]}"
         return callback null, results[0]
