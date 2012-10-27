@@ -1,9 +1,9 @@
   redis = require 'redis'
-  , dbConfig = require "../config/datadbConfig"
+  , dbConfig = require "../../config/datadbConfig"
 
   module.exports = class DataDB
-    constructor: ->
-      @client = redis.createClient dbConfig.port
+    constructor: (config) ->
+      @client = redis.createClient config?.port ? dbConfig.port
     
     open: (callback) -> 
       @client.on "error", (err) -> console.log "Redis error: #{err}"
