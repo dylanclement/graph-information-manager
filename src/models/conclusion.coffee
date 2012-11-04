@@ -1,5 +1,6 @@
 module.exports = class Conclusion
   constructor: (@name, @sql, @graphdb, @datadb) ->
+    console.log "Created conclusion #{name}"
 
   run: ->
     @command @sql, (err, results) ->
