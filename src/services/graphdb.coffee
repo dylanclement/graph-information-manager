@@ -1,11 +1,9 @@
 orientdb = require 'orientdb'
-, dbConfig = require "../../config/graphdbConfig"
-, serverConfig = require "../../config/graphdbServerConfig"
 
 module.exports = class GraphDB
-  constructor: (_dbConfig, _serverConfig) ->
+  constructor: (_dbConfig, _serverConfig, _dbname) ->
     @server = new orientdb.Server _serverConfig ? serverConfig
-    @db = new orientdb.GraphDb "temp", @server, _dbConfig ? dbConfig
+    @db = new orientdb.GraphDb _dbname, @server, _dbConfig ? dbConfig
   
   open: (callback) -> 
     @db.open (err) ->
@@ -64,7 +62,7 @@ module.exports = class GraphDB
     @command 'select from OGraphVertex', callback
     
   getAllObjects_Gremlin: (callback) ->
-    @command 'SELECT Gremlin(\'current.name\') from OGraphVertex', callback
+    @command 'SELECT Gremlin(\'current\') from OGraphVertex', callback
 
   updateAccessCount: (obj, callback) ->
     unless obj and obj["@rid"]?

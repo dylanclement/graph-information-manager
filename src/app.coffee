@@ -10,7 +10,10 @@ express = require 'express'
   , path = require 'path'
   , redis = require 'redis'
 
-graphDB = new GraphDb
+dbConfig = require "../config/graphdbConfig"
+serverConfig = require "../config/graphdbServerConfig"  
+graphDB = new GraphDb dbConfig, serverConfig, "temp"
+
 dataDB = new DataDb
 rel = new Relationship graphDB, dataDB
 
