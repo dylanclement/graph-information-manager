@@ -64,7 +64,7 @@ module.exports = class GraphDB
     @command 'select from OGraphVertex', callback
     
   getAllObjects_Gremlin: (callback) ->
-    @command 'select from GREMLIN("V.out")', callback
+    @command 'SELECT Gremlin(\'current.name\') from OGraphVertex', callback
 
   updateAccessCount: (obj, callback) ->
     unless obj and obj["@rid"]?
