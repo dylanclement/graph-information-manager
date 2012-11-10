@@ -2,8 +2,8 @@ orientdb = require 'orientdb'
 
 module.exports = class GraphDB
   constructor: (_dbConfig, _serverConfig, _dbname) ->
-    @server = new orientdb.Server _serverConfig ? serverConfig
-    @db = new orientdb.GraphDb _dbname, @server, _dbConfig ? dbConfig
+    @server = new orientdb.Server _serverConfig
+    @db = new orientdb.GraphDb _dbname, @server, _dbConfig
   
   open: (callback) -> 
     @db.open (err) ->

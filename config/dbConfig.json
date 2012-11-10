@@ -1,0 +1,20 @@
+{
+  "dataDb": {
+    "host"          : "localhost",
+    "port"          : 6379
+  },
+
+  "graphDb": {
+    "user_name"     : "admin",
+    "user_password" : "admin"
+  },
+
+  "graphDbName" : "brain",
+
+  "graphDbServer": {
+    "host"          : "localhost",
+    "port"          : 2424,
+    "user_name"     : "admin",
+    "user_password" : "admin"
+  }
+}

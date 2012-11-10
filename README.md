@@ -24,5 +24,18 @@ As much data as possible is saved, even accessing data modifies and adds to it, 
 #project board#
 https://trello.com/board/a-n-t/505e5311349fc8d53ecdf5dd
 
+#installation
+install and run redis - http://redis.io/topics/quickstart
+install and run orientdb - http://code.google.com/p/orient/wiki/GraphEdTutorial
+create graph database named 'brain' - 
+
+    mkdir /home/test/Programs/orientdb/databases/brain
+    . /home/test/Programs/orientdb/bin/console.sh
+    
+    create database local:/home/test/Programs/orientdb/databases/brain admin admin local
+
+now the application can be run by browsing to the project folder and running ```npm start```
+
 #dependencies#
 https://github.com/gabipetrovay/node-orientdb
+https://github.com/visionmedia/express
