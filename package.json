@@ -18,7 +18,7 @@
     "coffee-script": "*"
   },
   "scripts": {
-    "start": "node app",    
+    "start": "coffee src/app.coffee",
     "test": "make test",
     "migrate": "make migrate"
   }

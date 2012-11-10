@@ -4,14 +4,17 @@ express = require 'express'
   , Relationship = require "./models/relationship"  
   , routes = require './routes'
   , test = require './routes/test'
-  , relationship = require './routes/relationship'
+  , relationshipRoute = require './routes/relationshipRoutes'
+  , conclusionRoute = require './routes/conclusionRoutes'
   , http = require 'http'
   , path = require 'path'
   , redis = require 'redis'
 
-graphdb = new GraphDb
-datadb = new DataDb
-rel = new Relationship graphdb, datadb
+dbConfig = require "../config/dbConfig"
+graphDB = new GraphDb dbConfig.graphDb , dbConfig.graphDbServer, dbConfig.graphDbName
+
+dataDB = new DataDb dbConfig.dataDb
+rel = new Relationship graphDB, dataDB
 
 app = express()
 
@@ -32,19 +35,21 @@ app.configure 'development', ->
 
 app.listen app.get('port'), ->
   console.log "server listening on http://localhost:#{app.get 'port'}."
-  graphdb.open (err) ->
+  graphDB.open (err) ->
     if err
       return
     console.log "connected to graph db."
-    datadb.open (err) ->
+    dataDB.open (err) ->
       if err
         return
       console.log "connected to redis db."
       app.get '/', routes.index
       app.get '/test', test.list
       app.get '/relationship/list', (req, res) ->
-        relationship.list(req, res, rel)
+        relationshipRoute.list(req, res, rel)
       app.post '/relationship/new', (req, res) ->
-        relationship.new(req, res, rel)
+        relationshipRoute.new(req, res, rel)
       app.get '/relationship/all', (req, res) ->
-        relationship.all(req, res, rel)
+        relationshipRoute.all(req, res, rel)
+      app.get '/conclusion/is_a_category', (req, res) ->
+        conclusionRoute.is_a_category(req, res, graphDB, dataDB)

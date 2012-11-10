@@ -10,12 +10,12 @@ exports.new = (req, res, relationship) ->
     res.send 'saved object #{node}'
 
 exports.list = (req, res, relationship) ->
-  relationship.all (err, results) ->
+  relationship.allGremlin (err, results) ->
     res.render 'relations', { title: "Relationships", list: results }
     console.log "Relationships"
 
 
 exports.all = (req, res, relationship) ->
-  relationship.allGremlin (err, results) ->
+  relationship.all (err, results) ->
     res.render 'relations', { title: "Relationships", list: results }
     console.log "Relationships"
