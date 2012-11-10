@@ -1,5 +1,5 @@
 module.exports = class Relationship
-  constructor: (@graphdb, @datadb) ->
+  constructor: (@graphdb, @datadb, @inputStream) ->
 
   # save the object, subject and relationship to the db
   relation: (obj, rel, strength, sub, callback) ->
@@ -17,6 +17,7 @@ module.exports = class Relationship
             console.log "Error occured:#{err}"
             return callback err
           console.log "Saved #{objNode.name}(#{objNode["@rid"]})->#{edge.name}(#{edge["@rid"]})->#{subNode.name}(#{subNode["@rid"]}). Access count = #{edge.access_count}"
+          @inputStream.write "#{objNode.name},#{edge.name},#{subNode.name},#{Date.now()}\n"
           callback err, objNode
 
   # eg. a dog is a animal

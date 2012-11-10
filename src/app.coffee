@@ -9,12 +9,14 @@ express = require 'express'
   , http = require 'http'
   , path = require 'path'
   , redis = require 'redis'
+  , fs = require 'fs'
 
 dbConfig = require "../config/dbConfig"
 graphDB = new GraphDb dbConfig.graphDb , dbConfig.graphDbServer, dbConfig.graphDbName
 
 dataDB = new DataDb dbConfig.dataDb
-rel = new Relationship graphDB, dataDB
+inputStream = fs.createWriteStream "input.csv", 'flags': 'a'
+rel = new Relationship graphDB, dataDB, inputStream
 
 app = express()
 
