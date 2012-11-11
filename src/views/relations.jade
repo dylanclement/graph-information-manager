@@ -2,6 +2,6 @@ extends layout
 block content
   p Show all relationships
   items = list
-  each item, i in items
-    li #{i}: #{item.name}
+  each item in items
+    li #{item['@rid']}: #{item.name}
 
