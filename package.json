@@ -10,7 +10,8 @@
     "redis": "*",
     "less-middleware": "*",
     "migrate": "*",
-    "orientdb" : "*"
+    "orientdb" : "*",
+    "winston" : "*"
   },
   "devDependencies": {
     "mocha": "*",

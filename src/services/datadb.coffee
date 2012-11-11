@@ -1,11 +1,11 @@
   redis = require 'redis'
 
   module.exports = class DataDB
-    constructor: (config) ->
+    constructor: (config, @logger) ->
       @client = redis.createClient config?.port ? dbConfig.port
     
     open: (callback) -> 
-      @client.on "error", (err) -> console.log "Redis error: #{err}"
+      @client.on "error", (err) -> logger.err "Redis error", { err: err }
       callback()
       
     close: ->
@@ -15,17 +15,16 @@
       key = "#{obj}:#{rel}:#{sub}:#{cond}"
       @client.hgetall key, (err, data) =>
         if err
-          console.log "Error: Fetching meta-data.", key, err
+          @logger.err "Error: Fetching meta-data.", { err: err, key: key }
           return callback err
         unless data
-          console.log "Creating new meta-data ", key, data
+          @logger.log "Creating new data ", { key: key, data: data }
           data =
             created: new Date()
             try_create_count: 0
             access_count: 0
         else
           data = JSON.parse data
-          console.log "data = ", data
         data.access_count += 1
         data.try_create_count += 1
         @client.hmset key, JSON.stringify(data)
