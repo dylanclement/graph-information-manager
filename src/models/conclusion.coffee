@@ -1,10 +1,7 @@
 module.exports = class Conclusion
-  constructor: (@name, @sql, @graphdb, @datadb) ->
-    console.log "Created conclusion #{name}"
+  constructor: (@name, @sql, @graphdb, @datadb, @logger) ->
+    @logger.info "Created conclusion #{name}"
 
-  run: ->
-    @command @sql, (err, results) ->
-      if err
-        console.log "Conclusion Error:#{err}"
-        return callback err
-      console.log "Running consclusion #{@name}."
+  run: (callback) ->
+    @logger.info "Running consclusion", name : @name
+    @command @sql, callback

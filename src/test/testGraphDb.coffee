@@ -1,6 +1,10 @@
 graphDb = require '../services/graphdb'
 chai = require('chai') #actually call the the function
 expect = chai.expect
+winston = require 'winston'
+
+# Set up logging
+logger = new winston.Logger transports: [new (winston.transports.Console)()]
 
 describe "GraphDb", ->
   describe "connect to graphDb", ->
@@ -14,7 +18,7 @@ describe "GraphDb", ->
         user_name: "admin"
         user_password: "admin"
       
-      db = new graphDb dbConfig, dbServerConfig, "temp"
+      db = new graphDb dbConfig, dbServerConfig, "temp", logger
       expect(db).to.not.equal(undefined)
       db.open (err) ->
         expect(err).to.equal(undefined)
@@ -30,7 +34,7 @@ describe "GraphDb", ->
         user_name: "bob"
         user_password: "loblaw"
       
-      db = new graphDb dbConfig, dbServerConfig, "temp"
+      db = new graphDb dbConfig, dbServerConfig, "temp", logger
       expect(db).to.not.equal(undefined)
       db.open (err) ->
         expect(err).to.not.equal(undefined)
@@ -46,7 +50,7 @@ describe "GraphDb", ->
       port: 2424
       user_name: "admin"
       user_password: "admin"
-    db = new graphDb dbConfig, dbServerConfig, "temp"
+    db = new graphDb dbConfig, dbServerConfig, "temp", logger
 
     beforeEach ->
       # clear the db before each test
