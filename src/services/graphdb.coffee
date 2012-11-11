@@ -12,10 +12,15 @@ module.exports = class GraphDB
       return callback err
 
   close: ->
-    @db.close()
+    @db.close()  
 
   command: (cmd, callback) ->
     @db.command cmd, callback
+
+  clear: (callback) ->
+    @db.command "DELETE from OGraphEdge", (err, results) =>
+      @db.command "DELETE from OGraphVertex", (err, results) ->
+        if callback then callback err, results
 
   getObject: (name, callback) ->
     @command "select from OGraphVertex where name = '#{name}'", (err, results) ->
