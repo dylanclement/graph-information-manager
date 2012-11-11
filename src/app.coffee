@@ -12,11 +12,18 @@ express = require 'express'
   , fs = require 'fs'
   , winston = require 'winston'
 
+# create a date  yyyy-mm-dd method
+Date.prototype.yyyymmdd = () ->
+   yyyy = this.getFullYear().toString()
+   mm = (this.getMonth()+1).toString() # getMonth() is zero-based
+   dd  = this.getDate().toString()
+   return "#{yyyy}-#{(if mm.length > 1 then mm else '0' + mm[0])}-#{(if dd.length > 1 then dd else '0' + dd[0])}" # padding
+
 # Set up logging
 logger = new winston.Logger
   transports: [
     new (winston.transports.Console)(),
-    new (winston.transports.File) filename: 'somefile.log'
+    new (winston.transports.File) filename: "application-#{new Date().yyyymmdd()}.log"
   ]
 logger.on 'error', (err) -> console.log "Unhandled error occured, #{err}"
 inputStream = fs.createWriteStream "input.csv", 'flags': 'a'
