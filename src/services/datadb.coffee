@@ -5,7 +5,7 @@
       @client = redis.createClient config?.port ? dbConfig.port
     
     open: (callback) -> 
-      @client.on "error", (err) -> logger.err "Redis error", { err: err }
+      @client.on "error", (err) -> logger.error "Redis error", { err: err }
       callback()
       
     close: ->
@@ -15,7 +15,7 @@
       key = "#{obj}:#{rel}:#{sub}:#{cond}"
       @client.hgetall key, (err, data) =>
         if err
-          @logger.err "Error: Fetching meta-data.", { err: err, key: key }
+          @logger.error "Error: Fetching meta-data.", { err: err, key: key }
           return callback err
         unless data
           @logger.log "Creating new data ", { key: key, data: data }

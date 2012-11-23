@@ -6,15 +6,15 @@ module.exports = class Relationship
     # TODO! check if the obj and sub exist before trying to save
     @graphdb.createObject name : obj, (err, objNode) =>
       if err
-        @logger.err "Unable to create object", { err: err, name: obj }
+        @logger.error "Unable to create object", { err: err, name: obj }
         return callback err
       @graphdb.createObject name : sub, (err, subNode) =>
         if err
-          @logger.err "Unable to create subject", { err: err, name: sub }
+          @logger.error "Unable to create subject", { err: err, name: sub }
           return callback err
         @graphdb.createRelation objNode, subNode, { name : rel, strength: strength, created_at : Date.now(), access_count : 0 }, (err, edge) =>
           if err
-            @logger.err "Unable to create relation", { err: err, obj: obj, rel: rel, sub: sub }
+            @logger.error "Unable to create relation", { err: err, obj: obj, rel: rel, sub: sub }
             return callback err
           @logger.info "Saved #{objNode.name}(#{objNode["@rid"]})->#{edge.name}(#{edge["@rid"]})->#{subNode.name}(#{subNode["@rid"]}). Access count = #{edge.access_count}"
           @inputStream.write "#{objNode.name},#{edge.name},#{subNode.name},#{Date.now()}\n"
