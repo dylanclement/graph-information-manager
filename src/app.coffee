@@ -56,12 +56,12 @@ app.listen app.get('port'), ->
   # Connect to db's
   graphDB.open (err) ->
     if err
-      logger.err "Unable to connect to graphDb", { err: err }
+      logger.error "Unable to connect to graphDb", { err: err }
       return
     logger.info "connected to graph db."
     dataDB.open (err) ->
       if err
-        logger.err "Unable to connect to dataDb", { err: err }
+        logger.error "Unable to connect to dataDb", { err: err }
         return
       logger.info "connected to redis db."
 
