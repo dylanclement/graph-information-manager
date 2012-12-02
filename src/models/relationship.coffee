@@ -32,4 +32,5 @@ module.exports = class Relationship
     @graphdb.getAllObjects callback
 
   allGremlin: (callback) -> 
-    @graphdb.getAllObjects_Gremlin callback    
+    @graphdb.getAllObjects_Gremlin callback
+    

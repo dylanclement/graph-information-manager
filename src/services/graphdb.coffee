@@ -66,3 +66,4 @@ module.exports = class GraphDB
       return callback new Error("Must pass a valid object to updateAccessCount")
     @command "UPDATE #{obj["@rid"]} INCREMENT access_count = 1", (err, results) ->
       return callback err, results if callback
+      

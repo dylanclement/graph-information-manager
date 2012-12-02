@@ -71,3 +71,4 @@ app.listen app.get('port'), ->
       app.post '/relationship/new', (req, res) -> relationshipRoute.new(req, res, rel, logger)
       app.get '/relationship/all', (req, res) -> relationshipRoute.all(req, res, rel)
       app.get '/conclusion/is_a_category', (req, res) -> conclusionRoute.is_a_category(req, res, graphDB, dataDB, logger)
+      

@@ -3,5 +3,6 @@ module.exports = class Conclusion
     @logger.info "Created conclusion #{name}"
 
   run: (callback) ->
-    @logger.info "Running consclusion", name : @name
-    @command @sql, callback
+    @logger.info "Running conclusion", name : @name
+    @graphdb.command @sql, callback
+    

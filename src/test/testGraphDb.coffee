@@ -84,4 +84,5 @@ describe "GraphDb", ->
               expect(err).to.equal(null)
               expect(edge).not.to.equal(null)
               expect(edge.name).to.equal('rel')
-              done()          
+              done()
+              

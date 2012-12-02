@@ -28,4 +28,5 @@
         data.access_count += 1
         data.try_create_count += 1
         @client.hmset key, JSON.stringify(data)
-        return callback err, data    
+        return callback err, data
+        
