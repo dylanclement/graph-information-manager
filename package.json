@@ -10,7 +10,7 @@
     "redis": "*",
     "less-middleware": "*",
     "migrate": "*",
-    "orientdb" : "*",
+    "neo4j" : "*",
     "winston" : "*"
   },
   "devDependencies": {

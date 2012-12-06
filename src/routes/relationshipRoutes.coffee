@@ -12,3 +12,4 @@ exports.new = (req, res, relationship, @logger) ->
 exports.list = (req, res, relationship) ->
   relationship.all (err, results) ->
     res.render 'relations', { title: "Relationships", list: results }
+    

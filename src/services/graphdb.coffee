@@ -1,19 +1,17 @@
-orientdb = require 'orientdb'
+neo4j = require 'neo4j'
 
 module.exports = class GraphDB
   constructor: (_dbConfig, _serverConfig, _dbname, @logger) ->
-    @server = new orientdb.Server _serverConfig
-    @db = new orientdb.GraphDb _dbname, @server, _dbConfig
+    @db = new neo4j.GraphDatabase 'http://localhost:7474'
   
   open: (callback) -> 
-    @db.open (err) ->
-      return callback err
+    return callback null
 
   close: ->
-    @db.close()  
+    #@db.close()  
 
   command: (cmd, callback) ->
-    @db.command cmd, callback
+    @db.execute  cmd, callback
 
   clear: (callback) ->
     @db.command "DELETE from OGraphEdge", (err, results) =>
@@ -30,10 +28,12 @@ module.exports = class GraphDB
         @logger.info "Vertex exists", name: results[0].name
         @updateAccessCount results[0]
         return callback null, results[0]
-      @db.createVertex obj, callback
+      node = @db.createNode obj
+      node.save callback
       @logger.info "Created vertex", name: obj.name
+      return node
 
-  getRelation: (name, out_id, in_id, callback) ->
+  getRelation: (name, from, to, callback) ->
     @command "select from OGraphEdge where name = '#{name}' and out = '#{out_id}' and in = '#{in_id}'", (err, results) ->
       callback err, results
 
@@ -66,4 +66,3 @@ module.exports = class GraphDB
       return callback new Error("Must pass a valid object to updateAccessCount")
     @command "UPDATE #{obj["@rid"]} INCREMENT access_count = 1", (err, results) ->
       return callback err, results if callback
-      
